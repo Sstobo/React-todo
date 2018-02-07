@@ -8,6 +8,7 @@ import ClearButton from "../../components/ClearButton";
 
 import { ToDos } from "../../../api/todos";
 
+// constructor needs to have its methods inside it
 class App extends Component {
   constructor() {
     super();
@@ -19,8 +20,9 @@ class App extends Component {
   // toggle the checkbox to denote completion status
   toggleComplete(item) {
     ToDos.update(item._id, {$set : {complete: !item.complete}})
-
   }
+
+  // ToDos is what we call it, the "todos" is what the mongo array calls the collection (db.todos.method(find,delete, ect))
 
   addToDo(event) {
     event.preventDefault();
@@ -59,6 +61,7 @@ class App extends Component {
   render() {
     let number = this.props.todos.length;
 
+    // {this.props.todos  is the current instance of the ref to the DB being passed down}
     return (
       <div className="todo-list">
         <h1>So Much To Do</h1>
@@ -69,6 +72,7 @@ class App extends Component {
           </form>
         </div>
         <ul>
+          {/* this.props.todos.map takes each todo item and iterated out a thing (todoitem in this case) */}
           {this.props.todos.map((todo, index) => (
             <ToDoItem
               key={index}
@@ -93,6 +97,7 @@ App.defaultProps = {
   todos: []
 };
 
+// withtracker lets our program use the mongo db as props with this.props.todos,  or DIRECTLY impact the DB with ToDos ( or whatever you called it)
 export default withTracker(() => {
   return {
     todos: ToDos.find({}).fetch()

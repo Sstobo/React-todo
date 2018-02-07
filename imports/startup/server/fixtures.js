@@ -6,3 +6,4 @@ Meteor.startup(() => {
     ToDos.insert({ title: "Learn Meteor Again", complete: false });
   }
 });
+// if todos doesnt have content, add a new list item
